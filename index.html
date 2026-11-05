@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Nilamel Grama Panchayat geographical information and GIS resource mapping portal.">
+<title>Nilamel Grama Panchayat | GIS Resource Portal</title>
+
+<style>
+:root {
+  --primary: #176348;
+  --dark: #103c30;
+  --green2: #25845f;
+  --gold: #e6b64d;
+  --light: #edf5ef;
+  --white: #ffffff;
+  --text: #293b32;
+  --muted: #617269;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 90px;
+}
+
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: #f7f9f7;
+  color: var(--text);
+  line-height: 1.8;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+.container {
+  width: min(1160px, 92%);
+  margin: auto;
+}
+
+/* GOVERNMENT STYLE HEADER */
+
+.topbar {
+  background: var(--dark);
+  color: white;
+  text-align: center;
+  padding: 8px 12px;
+  font-size: 13px;
+  letter-spacing: 1px;
+}
+
+header {
+  background: white;
+  border-bottom: 4px solid var(--gold);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  padding: 22px 0;
+}
+
+.logo {
+  width: 90px;
+  height: 105px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.header-text h1 {
+  color: var(--primary);
+  font-size: clamp(23px, 3.5vw, 36px);
+  line-height: 1.3;
+}
+
+.header-text .malayalam {
+  color: #956d19;
+  font-size: 19px;
+  font-weight: 600;
+}
+
+.header-text p {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+/* NAVIGATION */
+
+nav {
+  background: var(--primary);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 4px 12px #00000020;
+}
+
+.nav-inner {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+nav a {
+  display: block;
+  padding: 14px 18px;
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background 0.3s;
+}
+
+nav a:hover,
+nav a:focus-visible {
+  background: var(--green2);
+}
+
+/* HERO SECTION */
+
+.hero {
+  min-height: 530px;
+  display: flex;
+  align-items: center;
+  color: white;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(7, 44, 30, 0.94),
+      rgba(7, 44, 30, 0.40)
+    ),
+    url("panchayath.jpeg")
+    center center / cover no-repeat;
+}
+
+.hero-content {
+  max-width: 770px;
+  padding: 80px 0;
+}
+
+.hero-tag {
+  display: inline-block;
+  background: var(--gold);
+  color: #25331d;
+  padding: 5px 16px;
+  border-radius: 25px;
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.hero h2 {
+  font-size: clamp(35px, 5vw, 56px);
+  line-height: 1.2;
+  margin-bottom: 23px;
+}
+
+.hero p {
+  font-size: 17px;
+  color: #f0f5f1;
+  max-width: 690px;
+  margin-bottom: 28px;
+}
+
+.button {
+  display: inline-block;
+  background: var(--gold);
+  color: #27351d;
+  padding: 12px 27px;
+  border-radius: 7px;
+  font-weight: 700;
+  transition: 0.3s;
+}
+
+.button:hover {
+  background: #f7d17a;
+  transform: translateY(-2px);
+}
+
+/* COMMON SECTION STYLE */
+
+section {
+  padding: 75px 0;
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: 42px;
+}
+
+.section-title h2 {
+  color: var(--primary);
+  font-size: clamp(26px, 3vw, 35px);
+}
+
+.section-title p {
+  color: var(--muted);
+  max-width: 740px;
+  margin: 6px auto;
+}
+
+.line {
+  width: 75px;
+  height: 4px;
+  background: var(--gold);
+  border-radius: 4px;
+  margin: 15px auto 0;
+}
+
+.two-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 42px;
+  align-items: center;
+}
+
+.paragraphs p {
+  font-size: 16px;
+  text-align: justify;
+  margin-bottom: 19px;
+}
+
+.image-box {
+  background: white;
+  padding: 12px;
+  border-radius: 14px;
+  box-shadow: 0 8px 28px #00000014;
+}
+
+.building-image {
+  width: 100%;
+  height: 370px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 9px;
+}
+
+figcaption {
+  text-align: center;
+  color: var(--muted);
+  font-size: 13px;
+  padding: 12px 5px 4px;
+}
+
+.light-section {
+  background: var(--light);
+}
+
+/* PROFILE CARDS */
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 23px;
+}
+
+.card {
+  background: white;
+  padding: 28px;
+  border-radius: 12px;
+  border-top: 4px solid var(--primary);
+  box-shadow: 0 5px 20px #0000000b;
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 9px 26px #00000016;
+}
+
+.card h3 {
+  color: var(--primary);
+  font-size: 19px;
+  margin-bottom: 13px;
+}
+
+.card p {
+  color: #4a5c52;
+  font-size: 15px;
+}
+
+/* BOUNDARY SECTION */
+
+.boundary-layout {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 38px;
+  align-items: center;
+}
+
+.boundary-image {
+  width: 100%;
+  height: auto;
+  max-height: 650px;
+  object-fit: contain;
+  background: white;
+  border-radius: 9px;
+}
+
+.boundary-text h3 {
+  color: var(--primary);
+  font-size: 23px;
+  margin-bottom: 16px;
+}
+
+.boundary-text p {
+  text-align: justify;
+  margin-bottom: 17px;
+}
+
+.feature-list {
+  list-style: none;
+  margin-top: 22px;
+}
+
+.feature-list li {
+  padding: 11px 0;
+  border-bottom: 1px solid #dbe5dd;
+}
+
+.feature-list li::before {
+  content: "✓";
+  color: var(--primary);
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+/* INTERACTIVE RESOURCE MAP */
+
+.map-description {
+  max-width: 900px;
+  margin: 0 auto 30px;
+  text-align: justify;
+}
+
+.map-description p {
+  margin-bottom: 15px;
+}
+
+.map-container {
+  background: white;
+  padding: 12px;
+  border-radius: 14px;
+  box-shadow: 0 8px 28px #00000015;
+  overflow: hidden;
+}
+
+.map-container iframe {
+  display: block;
+  width: 100%;
+  height: 600px;
+  border: none;
+  border-radius: 9px;
+  background: #e4eee7;
+}
+
+.map-bottom {
+  text-align: center;
+  margin-top: 27px;
+}
+
+.map-bottom p {
+  color: var(--muted);
+  margin-bottom: 15px;
+}
+
+/* CONTACT */
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+}
+
+.contact-box {
+  background: white;
+  padding: 35px;
+  border-radius: 13px;
+  box-shadow: 0 7px 24px #0000000e;
+}
+
+.contact-box h3 {
+  color: var(--primary);
+  font-size: 23px;
+  margin-bottom: 22px;
+}
+
+.contact-item {
+  margin-bottom: 20px;
+  overflow-wrap: anywhere;
+}
+
+.contact-item strong {
+  display: block;
+  color: var(--dark);
+  margin-bottom: 4px;
+}
+
+.contact-item a {
+  color: #176c4e;
+}
+
+.contact-item a:hover {
+  text-decoration: underline;
+}
+
+.notice {
+  background: var(--light);
+  padding: 20px;
+  border-radius: 9px;
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+/* FOOTER */
+
+footer {
+  background: var(--dark);
+  color: white;
+  padding: 42px 0 20px;
+  text-align: center;
+}
+
+footer h3 {
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+
+footer p {
+  color: #d1e1d7;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.footer-links {
+  margin: 20px 0;
+}
+
+.footer-links a {
+  color: #f0cf7c;
+  margin: 0 10px;
+}
+
+.footer-bottom {
+  border-top: 1px solid #ffffff30;
+  margin-top: 25px;
+  padding-top: 18px;
+  font-size: 12px;
+}
+
+/* RESPONSIVE DESIGN */
+
+@media (max-width: 900px) {
+  .two-columns,
+  .boundary-layout,
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .header-inner {
+    flex-direction: column;
+    text-align: center;
+    gap: 12px;
+  }
+
+  .logo {
+    width: 75px;
+    height: 85px;
+  }
+
+  .header-text h1 {
+    font-size: 24px;
+  }
+
+  nav a {
+    padding: 11px 10px;
+    font-size: 12px;
+  }
+
+  .hero {
+    min-height: 440px;
+  }
+
+  .hero-content {
+    padding: 55px 0;
+  }
+
+  .hero p {
+    font-size: 15px;
+  }
+
+  section {
+    padding: 52px 0;
+  }
+
+  .cards {
+    grid-template-columns: 1fr;
+  }
+
+  .building-image {
+    height: 270px;
+  }
+
+  .map-container iframe {
+    height: 450px;
+  }
+
+  .contact-box {
+    padding: 25px;
+  }
+
+  .footer-links a {
+    display: inline-block;
+    margin: 6px 10px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  NILAMEL GRAMA PANCHAYAT | GEOGRAPHICAL INFORMATION PORTAL
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="container header-inner">
+
+    <img
+      src="logo.png"
+      alt="Government of Kerala Emblem"
+      class="logo"
+    >
+
+    <div class="header-text">
+      <h1>NILAMEL GRAMA PANCHAYAT</h1>
+      <p class="malayalam">നിലമേൽ ഗ്രാമപഞ്ചായത്ത്</p>
+      <p>Kollam District | Kerala, India</p>
+      <p>Geographical Information and Resource Mapping Project</p>
+    </div>
+
+  </div>
+</header>
+
+<!-- NAVIGATION -->
+<nav aria-label="Main navigation">
+  <div class="container nav-inner">
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#profile">Profile</a>
+    <a href="#boundary">Boundary Map</a>
+    <a href="#resource">Resource Map</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<main>
+
+<!-- HOME SECTION -->
+<section class="hero" id="home">
+  <div class="container">
+    <div class="hero-content">
+
+      <span class="hero-tag">
+        GIS & LOCAL RESOURCE INFORMATION
+      </span>
+
+      <h2>
+        Discover Nilamel<br>
+        Grama Panchayat
+      </h2>
+
+      <p>
+        Explore the geographical characteristics,
+        administrative boundary, local infrastructure,
+        and spatial resources of Nilamel Grama
+        Panchayat through an integrated digital
+        information and resource mapping platform.
+      </p>
+
+      <a href="#resource" class="button">
+        Explore Interactive Resource Map
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT SECTION -->
+<section id="about">
+  <div class="container">
+
+    <div class="section-title">
+      <h2>About Nilamel Grama Panchayat</h2>
+      <p>
+        Local administration, geographical setting,
+        and community development
+      </p>
+      <div class="line"></div>
+    </div>
+
+    <div class="two-columns">
+
+      <div class="paragraphs">
+
+        <p>
+          Nilamel Grama Panchayat is a rural
+          local self-government institution
+          situated in Kollam district of Kerala,
+          India. Located in the eastern part
+          of Kollam district, Nilamel forms
+          part of Kerala's decentralised
+          administrative system, which
+          supports local development and
+          community participation.
+        </p>
+
+        <p>
+          Nilamel is associated with the
+          Chadayamangalam region and is
+          connected to surrounding settlements
+          through important local and regional
+          transportation networks. The area
+          represents a combination of rural
+          settlements, commercial activities,
+          public infrastructure, and
+          environmental resources.
+        </p>
+
+        <p>
+          The Panchayat plays an important
+          role in supporting public welfare,
+          infrastructure development,
+          sanitation, environmental management,
+          and the provision of essential
+          services. Local self-government
+          institutions help address the
+          developmental requirements of
+          communities through decentralised
+          planning and administration.
+        </p>
+
+        <p>
+          From a geographical perspective,
+          Nilamel Panchayat can be examined
+          through its settlement distribution,
+          road networks, land-use patterns,
+          drainage characteristics, vegetation,
+          and public facilities. Geographic
+          Information Systems (GIS) provide
+          a useful method for organising
+          and analysing these features.
+        </p>
+
+      </div>
+
+      <figure class="image-box">
+        <img
+          src="panchayath.jpeg"
+          alt="Nilamel Grama Panchayat Building"
+          class="building-image"
+          loading="lazy"
+        >
+        <figcaption>
+          Nilamel Grama Panchayat Building,
+          Kollam District, Kerala
+        </figcaption>
+      </figure>
+
+    </div>
+  </div>
+</section>
+
+<!-- GEOGRAPHICAL PROFILE -->
+<section class="light-section" id="profile">
+  <div class="container">
+
+    <div class="section-title">
+      <h2>Geographical Profile</h2>
+      <p>
+        Spatial, administrative, and environmental
+        characteristics of Nilamel Panchayat
+      </p>
+      <div class="line"></div>
+    </div>
+
+    <div class="cards">
+
+      <article class="card">
+        <h3>Administrative Location</h3>
+        <p>
+          Nilamel Grama Panchayat is located
+          in Kollam district, Kerala, in
+          the Chadayamangalam region.
+          It forms part of the rural
+          local self-government system
+          of the state.
+        </p>
+      </article>
+
+      <article class="card">
+        <h3>Physical Geography</h3>
+        <p>
+          The geographical environment
+          includes terrain, local drainage
+          systems, vegetation, and
+          settlement areas. These
+          characteristics influence
+          land use and development.
+        </p>
+      </article>
+
+      <article class="card">
+        <h3>Land Use and Land Cover</h3>
+        <p>
+          Land-use studies help identify
+          residential areas, agricultural
+          land, vegetation, roads, and
+          other landscape features.
+          Mapping these categories
+          supports local planning.
+        </p>
+      </article>
+
+      <article class="card">
+        <h3>Transportation Network</h3>
+        <p>
+          Transportation networks connect
+          Nilamel with nearby settlements
+          and regional centres. Road
+          mapping is useful for studying
+          accessibility and connectivity.
+        </p>
+      </article>
+
+      <article class="card">
+        <h3>Public Infrastructure</h3>
+        <p>
+          Schools, healthcare facilities,
+          government institutions,
+          commercial centres, and
+          community facilities are
+          important elements of
+          local resource assessment.
+        </p>
+      </article>
+
+      <article class="card">
+        <h3>GIS and Resource Mapping</h3>
+        <p>
+          GIS technology supports the
+          mapping and analysis of
+          administrative boundaries,
+          infrastructure, land use,
+          environmental resources,
+          and spatial relationships.
+        </p>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- BOUNDARY MAP -->
+<section id="boundary">
+  <div class="container">
+
+    <div class="section-title">
+      <h2>Nilamel Panchayat Boundary Map</h2>
+      <p>
+        Administrative boundary and geographical
+        representation of the study area
+      </p>
+      <div class="line"></div>
+    </div>
+
+    <div class="boundary-layout">
+
+      <figure class="image-box">
+        <img
+          src="boundary.png"
+          alt="Nilamel Grama Panchayat Boundary Map"
+          class="boundary-image"
+          loading="lazy"
+        >
+        <figcaption>
+          Administrative Boundary Map of
+          Nilamel Grama Panchayat
+        </figcaption>
+      </figure>
+
+      <div class="boundary-text">
+
+        <h3>Understanding the Administrative Boundary</h3>
+
+        <p>
+          The administrative boundary
+          map represents the geographical
+          extent of Nilamel Grama
+          Panchayat. Boundary maps
+          provide an important spatial
+          reference for geographical
+          research, resource assessment,
+          and local development planning.
+        </p>
+
+        <p>
+          Administrative boundary
+          information helps identify
+          the area covered by local
+          governance and provides
+          a framework for analysing
+          settlements, transportation
+          networks, public facilities,
+          and environmental resources.
+        </p>
+
+        <p>
+          When integrated with GIS
+          datasets, boundary maps
+          support thematic mapping,
+          spatial analysis, and
+          the examination of
+          geographical relationships.
+          These applications can
+          assist in identifying
+          local planning priorities.
+        </p>
+
+        <ul class="feature-list">
+          <li>Administrative area identification</li>
+          <li>Spatial planning and development</li>
+          <li>Land-use and land-cover assessment</li>
+          <li>Public infrastructure mapping</li>
+          <li>Environmental resource management</li>
+          <li>GIS-based geographical analysis</li>
+        </ul>
+
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- RESOURCE MAP -->
+<section class="light-section" id="resource">
+  <div class="container">
+
+    <div class="section-title">
+      <h2>Interactive Resource Map</h2>
+      <p>
+        Digital GIS-based resource information
+        platform for Nilamel Grama Panchayat
+      </p>
+      <div class="line"></div>
+    </div>
+
+    <div class="map-description">
+
+      <p>
+        Resource mapping is an important
+        geographical technique used to
+        identify, organise, and visualise
+        the spatial distribution of
+        natural resources, public
+        infrastructure, land-use features,
+        and other geographical elements
+        within a defined area.
+      </p>
+
+      <p>
+        Interactive GIS maps allow
+        users to explore geographical
+        information through a digital
+        interface. Depending on the
+        available map layers, users
+        can examine the locations
+        and spatial relationships
+        of different resources
+        and facilities.
+      </p>
+
+      <p>
+        The interactive resource map
+        below is connected to the
+        existing Nilamel Panchayat
+        mapping project. It provides
+        access to the geographical
+        information available
+        through that platform.
+      </p>
+
+    </div>
+
+    <div class="map-container">
+
+      <iframe
+        src="https://sulfiyanazeer7-hue.github.io/Panchayath-map1/"
+        title="Nilamel Panchayat Interactive Resource Map"
+        loading="lazy"
+        allowfullscreen
+        referrerpolicy="strict-origin-when-cross-origin">
+      </iframe>
+
+    </div>
+
+    <div class="map-bottom">
+
+      <p>
+        Open the interactive map in a
+        separate browser tab for a
+        larger viewing area.
+      </p>
+
+      <a
+        href="https://sulfiyanazeer7-hue.github.io/Panchayath-map1/"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="button">
+        Open Full Resource Map ↗
+      </a>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- IMPORTANCE OF GIS -->
+<section id="importance">
+  <div class="container">
+
+    <div class="section-title">
+      <h2>Importance of GIS in Local Planning</h2>
+      <p>
+        Geospatial technology for sustainable
+        Panchayat-level development
+      </p>
+      <div class="line"></div>
+    </div>
+
+    <div class="paragraphs">
+
+      <p>
+        Geographic Information Systems
+        provide a scientific framework
+        for understanding the spatial
+        relationships between human
+        activities and the physical
+        environment. At the Panchayat
+        level, GIS helps organise
+        information related to
+        settlements, transportation,
+        public facilities, land use,
+        and environmental resources.
+      </p>
+
+      <p>
+        Spatial analysis can help
+        identify patterns of resource
+        distribution and examine
+        accessibility to important
+        services. Such information
+        can support infrastructure
+        planning, environmental
+        management, disaster
+        preparedness, and the
+        prioritisation of
+        development activities.
+      </p>
+
+      <p>
+        The integration of digital
+        maps and geographical data
+        also improves public access
+        to spatial information.
+        This website demonstrates
+        how GIS technology can
+        be used to present
+        local geographical
+        information through
+        an accessible web-based
+        resource mapping platform.
+      </p>
+
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="light-section" id="contact">
+  <div class="container">
+
+    <div class="section-title">
+      <h2>Contact Information</h2>
+      <p>
+        Nilamel Panchayat Geographical
+        Information and Resource Mapping Project
+      </p>
+      <div class="line"></div>
+    </div>
+
+    <div class="contact-grid">
+
+      <div class="contact-box">
+
+        <h3>Project Contact Details</h3>
+
+        <div class="contact-item">
+          <strong>Contact Person</strong>
+          <span>Sulfiya N</span>
+        </div>
+
+        <div class="contact-item">
+          <strong>Phone Number</strong>
+          <a href="tel:35798764365">
+            35798764365
+          </a>
+        </div>
+
+        <div class="contact-item">
+          <strong>Email Address</strong>
+          <a href="mailto:sulfiyan77@gmail.com">
+            sulfiyan77@gmail.com
+          </a>
+        </div>
+
+        <div class="contact-item">
+          <strong>Project Study Area</strong>
+          <span>
+            Nilamel Grama Panchayat<br>
+            Chadayamangalam Region<br>
+            Kollam District<br>
+            Kerala, India
+          </span>
+        </div>
+
+      </div>
+
+      <div class="contact-box">
+
+        <h3>About This Digital Project</h3>
+
+        <p>
+          The Nilamel Grama Panchayat
+          geographical information
+          website has been developed
+          to present administrative,
+          geographical, and
+          resource-related information
+          through a modern and
+          accessible digital interface.
+        </p>
+
+        <p style="margin-top: 15px;">
+          The project integrates
+          descriptive geographical
+          information, an administrative
+          boundary map, and an
+          interactive GIS resource
+          mapping application.
+          It is intended to support
+          geographical learning,
+          spatial understanding,
+          and local resource awareness.
+        </p>
+
+        <div class="notice">
+          <strong>Project Disclaimer</strong>
+          <p>
+            This website is an independent
+            educational and GIS resource
+            mapping project. It is not
+            an official government website.
+            The contact details provided
+            are for the project and
+            should not be interpreted
+            as official Panchayat
+            office contact information.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+
+    <h3>Nilamel Grama Panchayat</h3>
+
+    <p>
+      Geographical Information &
+      Resource Mapping Portal
+    </p>
+
+    <p>
+      Kollam District, Kerala, India
+    </p>
+
+    <div class="footer-links">
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#boundary">Boundary</a>
+      <a href="#resource">Resource Map</a>
+      <a href="#contact">Contact</a>
+    </div>
+
+    <div class="footer-bottom">
+
+      <p>
+        © <span id="year"></span>
+        Nilamel Geographical Information Project
+      </p>
+
+      <p>
+        Designed and Developed by Sulfiya N
+      </p>
+
+      <p>
+        GIS | Resource Mapping | Geographical Information
+      </p>
+
+      <p>
+        Independent educational project.
+        Not an official Government of Kerala website.
+      </p>
+
+    </div>
+
+  </div>
+</footer>
+
+<script>
+  // Automatically display the current year.
+  document.getElementById("year").textContent =
+    new Date().getFullYear();
+</script>
+
+</body>
+</html>
